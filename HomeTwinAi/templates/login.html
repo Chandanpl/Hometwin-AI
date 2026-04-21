@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | HomeTwin AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-page night-mode" data-page="auth">
+    <main class="auth-shell page-fade">
+        <section class="auth-brand">
+            <p class="eyebrow">HomeTwin AI</p>
+            <h1>Control your intelligent home from one secure dashboard.</h1>
+            <p>Live weather, predictive automation, device intelligence, and energy optimization in a polished digital twin experience.</p>
+        </section>
+
+        <form class="auth-card" method="post">
+            <div>
+                <p class="eyebrow">Welcome back</p>
+                <h2>Login</h2>
+            </div>
+            {% if error %}
+                <p class="form-alert">{{ error }}</p>
+            {% endif %}
+            <label>
+                Username
+                <input name="username" type="text" placeholder="demo" autocomplete="username" required>
+            </label>
+            <label>
+                Password
+                <input name="password" type="password" placeholder="demo123" autocomplete="current-password" required>
+            </label>
+            <button class="primary-action ripple-button" type="submit">Enter Dashboard</button>
+            <p class="auth-link">New here? <a href="{{ url_for('signup') }}">Create an account</a></p>
+        </form>
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | HomeTwin AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="app-page night-mode" data-page="dashboard" data-username="{{ username }}" data-preference="{{ preference }}">
+    <aside class="sidebar">
+        <a class="brand-mark" href="{{ url_for('dashboard') }}">
+            <span>HT</span>
+            <b>HomeTwin AI</b>
+        </a>
+        <nav>
+            <a class="active" href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('profile') }}#settings">Settings</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        <div class="sidebar-card">
+            <small>Signed in as</small>
+            <strong>{{ username }}</strong>
+            <span id="sidebarMode">{{ preference|capitalize }} mode</span>
+        </div>
+    </aside>
+
+    <main class="app-main page-fade">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">Live AI workspace</p>
+                <h1>Smart Home Dashboard</h1>
+                <p id="statusText">Finding your location and syncing live weather.</p>
+            </div>
+            <div class="weather-card compact">
+                <span id="cityName">Locating...</span>
+                <strong id="currentTemp">--°C</strong>
+                <div class="weather-strip">
+                    <small>Forecast <b id="futureTemp">--°C</b></small>
+                    <small id="modeBadge">Night Mode</small>
+                </div>
+                <small id="weatherSource">Waiting for weather signal</small>
+            </div>
+        </header>
+
+        <section class="ai-status panel">
+            <div class="ai-pulse" id="aiPulse"><span></span><b id="aiState">System standing by</b></div>
+            <div class="loader" id="aiLoader"></div>
+            <p id="predictionReason">AI is warming up.</p>
+        </section>
+
+        <section class="grid">
+            <article class="panel controls-panel">
+                <div class="section-title">
+                    <span>Command Center</span>
+                    <small id="profileImpact">Eco preference lowers idle usage.</small>
+                </div>
+                <label class="toggle-row"><span>Room occupancy</span><input type="checkbox" id="occupancyToggle" checked></label>
+                <label class="toggle-row"><span>Automation active</span><input type="checkbox" id="ecoToggle" checked></label>
+                <div class="preference-tabs" role="group" aria-label="Preference mode">
+                    <button class="active ripple-button" id="ecoPrefBtn" type="button">Eco</button>
+                    <button class="ripple-button" id="comfortPrefBtn" type="button">Comfort</button>
+                </div>
+                <button class="primary-action ripple-button" id="refreshBtn" type="button">Run AI Prediction</button>
+            </article>
+
+            <article class="panel device-panel">
+                <div class="section-title"><span>Device Twin</span><small>interactive status</small></div>
+                <div class="device-row">
+                    <div class="fan-shell" id="fanShell"><div class="fan"><span></span><span></span><span></span></div></div>
+                    <div><p>Smart Fan</p><strong class="status-pill off" id="fanStatus">OFF</strong></div>
+                </div>
+                <div class="device-row">
+                    <div class="light-orb" id="lightOrb"></div>
+                    <div><p>Adaptive Light</p><strong class="status-pill off" id="lightStatus">OFF</strong></div>
+                </div>
+            </article>
+
+            <article class="panel score-panel">
+                <div class="section-title"><span>Energy Score</span><small>animated health</small></div>
+                <div class="score-ring" id="scoreRing"><strong id="energyScore">0</strong></div>
+                <div class="score-label" id="scoreLabel">Awaiting signal</div>
+            </article>
+
+            <article class="panel prediction-panel">
+                <div class="section-title"><span>Next Prediction</span><small>future state</small></div>
+                <p id="nextPrediction">Next prediction will appear here.</p>
+            </article>
+
+            <article class="panel chart-panel">
+                <div class="section-title"><span>Live Energy Graph</span><small>current vs predicted</small></div>
+                <div class="chart-frame"><canvas id="energyChart" aria-label="Energy usage chart"></canvas></div>
+            </article>
+
+            <article class="panel analytics-panel">
+                <div class="section-title"><span>Energy Analytics</span><small>watts</small></div>
+                <div class="metric-grid">
+                    <div><span>Usage</span><strong id="energyUsage">-- W</strong></div>
+                    <div><span>Waste</span><strong id="energyWaste">-- W</strong></div>
+                    <div><span>Saved</span><strong id="energySaved">-- W</strong></div>
+                </div>
+            </article>
+
+            <article class="panel insights-panel">
+                <div class="section-title"><span>Smart Insights</span><small>dynamic engine</small></div>
+                <p id="recommendation">Waiting for smart home telemetry.</p>
+                <p class="muted" id="dailyInsight">Daily insight will appear after prediction.</p>
+            </article>
+
+            <article class="panel music-panel">
+                <div class="section-title"><span>Smart Music</span><small id="musicState">Paused</small></div>
+                <audio id="ambientAudio" loop preload="auto"></audio>
+                <button class="music-button ripple-button" id="musicBtn" type="button">Play Relaxing Music</button>
+            </article>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

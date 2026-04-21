@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | HomeTwin AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="app-page night-mode" data-page="profile" data-username="{{ username }}" data-preference="{{ preference }}">
+    <aside class="sidebar">
+        <a class="brand-mark" href="{{ url_for('dashboard') }}"><span>HT</span><b>HomeTwin AI</b></a>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a class="active" href="{{ url_for('profile') }}">Profile</a>
+            <a href="#settings">Settings</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        <div class="sidebar-card">
+            <small>Signed in as</small>
+            <strong>{{ username }}</strong>
+            <span>{{ preference|capitalize }} mode</span>
+        </div>
+    </aside>
+
+    <main class="app-main page-fade">
+        <header class="topbar profile-topbar">
+            <div>
+                <p class="eyebrow">Account workspace</p>
+                <h1>Profile & Settings</h1>
+                <p>Manage the behavior that shapes your smart home predictions.</p>
+            </div>
+        </header>
+
+        <section class="profile-grid">
+            <form class="panel profile-settings" method="post">
+                <div class="section-title">
+                    <span>User Profile</span>
+                    <small>session backed</small>
+                </div>
+                {% if saved %}
+                    <p class="form-success">Preferences saved.</p>
+                {% endif %}
+                <label>
+                    Username
+                    <input value="{{ username }}" readonly>
+                </label>
+                <label id="settings">
+                    Automation mode
+                    <select name="preference" id="profilePreference">
+                        <option value="eco" {% if preference == "eco" %}selected{% endif %}>Eco mode</option>
+                        <option value="comfort" {% if preference == "comfort" %}selected{% endif %}>Comfort mode</option>
+                    </select>
+                </label>
+                <button class="primary-action ripple-button" type="submit">Save Preferences</button>
+            </form>
+
+            <article class="panel preference-card">
+                <div class="section-title">
+                    <span>Preference Impact</span>
+                    <small>AI behavior</small>
+                </div>
+                <div class="impact-row">
+                    <strong>Eco</strong>
+                    <p>Reduces idle consumption and favors energy score.</p>
+                </div>
+                <div class="impact-row">
+                    <strong>Comfort</strong>
+                    <p>Responds earlier to warmth and favors comfort conditions.</p>
+                </div>
+            </article>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
